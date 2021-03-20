@@ -78,7 +78,7 @@ def break_interval_time():
 def activities():
     # string array to store break activities
     activities_list = []
-    # Prompt user for break activities
+    # Prompt user for break activity
     activity_input = input("\nPlease type an activity that you would like to do on"
                            " your break (Type 'End' when done): ")
     integer_proceed = False
@@ -113,6 +113,7 @@ def number_breaks(study_time, break_interval):
         break_cycles = int(study_time / 0.5)
         return break_cycles
     elif break_interval == 50:
+        # technically this eliminates any half our increment timer with the 50 min study option
         break_cycles = int(study_time // 1)
         return break_cycles
 
