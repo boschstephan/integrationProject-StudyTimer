@@ -1,17 +1,21 @@
-"""Study Timer"""
+"""
+Study Timer
+This program is a study timer that will alert the user to take a break
+as well as give them a randomly assigned task to do during their break.
+The tasks will be selected or input from the user at the beginning of
+the session.
+"""
 __author__ = "Stephan Bosch"
-
-# This program is a study timer that will alert the user to take a break
-# as well as give them a randomly assigned task to do during their break.
-# The tasks will be selected or input from the user at the beginning of
-# the session.
 
 import random
 import time
 
 
 def is_float(user_input):
-    """Check if user's input is float, return True or False."""
+    """Check if user's input is float.
+
+    :return: True or False.
+    """
     try:
         float(user_input)
         return True
@@ -21,9 +25,10 @@ def is_float(user_input):
 
 
 def is_valid_length(user_input):
-    """
-    Check if user's input for total study time is valid,
-    return True or False.
+    """Check if user's input for total study time is valid (greater than
+    zero and divisible by 0.5).
+
+    :return: True or False.
     """
     if user_input > 0 and user_input % 0.5 == 0:
         return True
@@ -33,7 +38,10 @@ def is_valid_length(user_input):
 
 
 def is_integer(user_input):
-    """Check if user's input is integer, return True or False."""
+    """Check if user's input is integer.
+
+    :return: True or False.
+    """
     try:
         int(user_input)
         return True
@@ -43,9 +51,9 @@ def is_integer(user_input):
 
 
 def is_valid_break_interval(user_input):
-    """
-    Check if user's input for break interval time is valid (25 or 50 min),
-    return True or False.
+    """Check if user's input for break interval time is valid (25 or 50 min).
+
+    :return: True or False.
     """
     if user_input == 25 or user_input == 50:
         return True
@@ -55,7 +63,10 @@ def is_valid_break_interval(user_input):
 
 
 def study_session_length():
-    """Ask user how long to study, return user's desired time."""
+    """Ask user how long to study.
+
+    :return: User's desired time.
+    """
     # The next code group asks user for study time and verifies input
     length_proceed = False
     # Had to declare study_length variable before while loops to remove
@@ -67,14 +78,19 @@ def study_session_length():
             # Ask how long they intend to study
             study_length = input("In 0.5 hour increments, how many hours do "
                                  "you intend to study for? ")
+            # Verify user input is a float.
             float_proceed = is_float(study_length)
         study_length = float(study_length)
+        # Verify user input is above 0 and divisible by 0.5.
         length_proceed = is_valid_length(study_length)
     return study_length
 
 
 def break_interval_time():
-    """Ask user how often to take breaks, return user's desired interval."""
+    """Ask user how often to take breaks.
+
+    :return: User's desired interval.
+    """
     # Figure study/break lengths:
     # Some 25/5  fine for studying notes and memorizing materials cite MIT
     # Some 50/10 needed for problem-solving tasks, psets, and writing papers
@@ -92,14 +108,19 @@ def break_interval_time():
             # Ask how long they intend to study
             break_interval = input("How often would you like to break? "
                                    "Please enter either 25 or 50. ")
+            # Check to see whether user input is an integer.
             integer_proceed = is_integer(break_interval)
         break_interval = int(break_interval)
+        # Checks to see whether user input is either 25 or 50.
         break_proceed = is_valid_break_interval(break_interval)
     return break_interval
 
 
 def activities():
-    """Ask user what activities they want to do during break. Return list."""
+    """Ask user what activities they want to do during break.
+
+    :return: Activities list.
+    """
     # string array to store break activities
     activities_list = []
     # Prompt user for break activity
@@ -131,8 +152,11 @@ def activities():
         while not integer_proceed:
             multiplier = input("Up to how many times would you like to do "
                                "this activity? ")
+            # Check to see whether user input is an integer.
             integer_proceed = is_integer(multiplier)
         multiplier = int(multiplier)
+        # Add the user's activity to the activities list as many times as
+        # they wanted.
         while multiplier >= 1:
             activities_list.append(activity_input)
             multiplier -= 1
@@ -145,20 +169,23 @@ def number_breaks(study_time, break_interval):
 
     :param study_time: The total study time the user input.
     :param break_interval: How often the user wanted to take a break.
-    :return: How many break cycles will occur.
+    :return: How many study/break cycles will occur.
     """
     if break_interval == 25:
         break_cycles = int(study_time / 0.5)
         return break_cycles
     elif break_interval == 50:
-        # technically this eliminates any half our increment timer with the
-        # 50 min study option
+        # technically this eliminates the final half hour time increment (
+        # total study time) with 50 min study option and makes it a full hour.
         break_cycles = int(study_time // 1)
         return break_cycles
 
 
 def is_ready():
-    """Ask user if they are ready to begin, return True or False."""
+    """Ask user if they are ready to begin.
+
+    :return: True or False.
+    """
     user_ready = input("Are you ready to begin? Please type 'Yes' or 'yes': ")
     if user_ready == 'Yes' or user_ready == 'yes':
         return True
@@ -171,7 +198,10 @@ def is_ready():
 # PyCharm interpreter doesn't actually show timer.
 # How do I go about making sure the clock is shown?
 def countdown(seconds):
-    """Use argument to run a timer, return False when done."""
+    """Use argument to run a timer.
+
+    :return: False.
+    """
     while seconds:
         mins, secs = divmod(seconds, 60)
         # Formats timer in 00:00 display using curly brackets and .format
@@ -190,7 +220,6 @@ def interval_timer(break_interval, number_of_breaks, activities):
     :param break_interval: Use to calculate study/break time in seconds.
     :param number_of_breaks: Use to calculate study/break iterations.
     :param activities: Display to user at break time.
-    :return: N/A
     """
     # I had to declare the study and break time seconds before the if/elif
     # statements to get rid of pycharm warning.
@@ -222,7 +251,10 @@ def interval_timer(break_interval, number_of_breaks, activities):
 
 
 def run_timer_again():
-    """Ask user if they want to restart the timer, call main() if yes."""
+    """Ask user if they want to restart the timer.
+
+    :return: Call main() if yes.
+    """
     print("The timer program has ended.")
     run_again = input("Would you like to restart the timer? Please type "
                       "'Yes' or 'yes': ")
@@ -255,7 +287,10 @@ main()
 
 
 def do_you_want_to_call_other_code():
-    """Ask user if they want to run other sprint code, return True or False"""
+    """Ask user if they want to run other sprint code.
+
+    :return: True, if user types 'yes'.
+    """
     call_code = False
     while not call_code:
         user_input = input("Would you like to run the random code? ")
